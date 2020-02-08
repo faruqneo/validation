@@ -1,0 +1,49 @@
+{
+  "name": "marmeto-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://faruqneo@bitbucket.org/faruqneo/marmeto-app.git"
+  },
+  "author": "Marmeto",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/faruqneo/marmeto-app#readme",
+  "devDependencies": {
+    "aws-sdk": "^2.454.0",
+    "nodemon": "^1.18.3"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^7.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "express-messages": "^1.0.1",
+    "express-mysql-session": "^2.1.0",
+    "express-session": "^1.16.1",
+    "googleapis": "^37.1.0",
+    "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "localStorage": "^1.0.4",
+    "multer": "^1.4.1",
+    "mysql": "^2.17.1",
+    "mysql2": "^1.6.1",
+    "nodemailer": "^6.1.1",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "pdfreader": "^1.0.3",
+    "sequelize": "^5.0.0-beta.11",
+    "sessionstorage": "^0.1.0",
+    "xoauth2": "^1.2.0"
+  }
+}

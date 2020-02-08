@@ -1,0 +1,99 @@
+<%- include('../include/head.ejs') %>
+
+<%- include('../include/navbar.ejs') %>
+<div class="container">
+   <% if(vacation) { %>
+      <div class="alert alert-dismissible alert-success" style="display: none">
+            <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+            <strong>Well done!</strong> Approved .
+      </div>
+      <div class="alert alert-dismissible alert-danger" style="display: none">
+            <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+            <strong>Oh snap!</strong> Rejected.
+      </div>
+      <legend>Vacation</legend>
+      <input type="hidden" class="form-control-plaintext" id="id" value="<%= vacation['id']  %>">
+      <input type="hidden" class="form-control-plaintext" id="status" value="<%= vacation['status']  %>">
+      <div class="form-group row">
+         <label for="staticEmail" class="col-sm-2 col-form-label">Employ Name</label>
+         <div class="col-sm-10">
+           <input type="text" readonly="" class="form-control-plaintext" id="name" value="<%= vacation['userName']  %>">
+         </div>
+       </div>
+       <div class="form-group row">
+         <label for="staticEmail" class="col-sm-2 col-form-label">Start Date</label>
+         <div class="col-sm-10">
+           <input type="text" readonly="" class="form-control-plaintext" id="start" value="<%= vacation['startedAt']  %>">
+         </div>
+       </div>
+       <div class="form-group row">
+         <label for="staticEmail" class="col-sm-2 col-form-label">End Date</label>
+         <div class="col-sm-10">
+           <input type="text" readonly="" class="form-control-plaintext" id="end" value="<%= vacation['endedAt']  %>">
+         </div>
+       </div>
+       <div class="form-group row">
+         <label for="staticEmail" class="col-sm-2 col-form-label">NoOfDays</label>
+         <div class="col-sm-10">
+           <input type="text" readonly="" class="form-control-plaintext" id="noofdays" value="<%= vacation['noOfDays']  %>">
+         </div>
+       </div>
+       <div class="form-group row">
+         <label for="staticEmail" class="col-sm-2 col-form-label">Reason</label>
+         <div class="col-sm-10">
+           <input type="text" readonly="" class="form-control-plaintext" id="reason" value="<%= vacation['reason']  %>">
+         </div>
+       </div>
+       <center>
+         <button type="button" class="btn btn-primary" onclick="approve()">Approve</button>
+         <button type="button" class="btn btn-secondary reject" onclick="reject()">Reject</button>
+       </center>
+   <% }%>
+</div>
+
+<hr>
+<%- include('../include/footer.ejs') %>
+
+<script>
+      let id = document.getElementById("id").value;
+      let status = document.getElementById("status").value;
+      // let start = document.getElementById("start").value;
+      // let end = document.getElementById("end").value;
+      // let noofdays = document.getElementById("noofdays").value;
+      // let reason = document.getElementById('reason').value;
+      if(status === "1")
+      {
+         $('.alert-success').show();
+         $('.alert-danger').hide();
+         $('.btn-primary').prop('disabled', true);
+      }
+      else if(status === "2")
+      {
+         $('.alert-success').hide();
+         $('.alert-danger').show();
+         // $('.btn-primary').prop('disabled', true);
+         $('.reject').prop('disabled', true);
+      }
+
+   const approve = async() => {
+      //alert("hello")
+      const response = await axios.post('/vacationResponse', {
+         id: id,
+         response: "approve"
+      });
+      //alert("The vacation has beed approved");
+      location.href = '/vacation/'+id;
+   }
+
+   const reject = async() => {
+      //alert("reject")
+      const response = await axios.post('/vacationResponse', {
+         id: id,
+         response: "reject"
+      });
+      //alert("The vacation has beed rejected");
+      location.href = '/vacation/'+id;
+
+      
+   }
+   </script>

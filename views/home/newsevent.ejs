@@ -1,0 +1,43 @@
+<%- include('../include/head.ejs') %>
+
+<%- include('../include/navbar.ejs') %>
+<div class="container">
+   
+   <ul class="nav nav-tabs">
+         
+         <li class="nav-item">
+               <a class="nav-link active" data-toggle="tab" href="#new">Add</a>
+             </li>
+             <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#news">News</a>
+                </li>
+                <li class="nav-item">
+                     <a class="nav-link" data-toggle="tab" href="#events">Events</a>
+                   </li>
+       </ul>
+       <div id="myTabContent" class="tab-content">
+         <div class="tab-pane fade active show" id="new">
+               <div class="container">
+                  <br>
+                  <%- include('./neweventsadd.ejs') %>
+               </div>
+         </div>
+         <div class="tab-pane fade" id="news">
+               <div class="container">
+                  <br>
+                  <%- include('./newslist.ejs') %>
+               </div>
+         </div>
+         <div class="tab-pane fade" id="events">
+               <div class="container">
+                  <br>
+                  <%- include('./eventlist.ejs') %>
+               </div>
+         </div>
+       </div>
+</div>
+
+<hr>
+<%- include('../include/footer.ejs') %>
+
+

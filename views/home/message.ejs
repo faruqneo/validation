@@ -1,0 +1,120 @@
+
+<%- include('../include/head.ejs') %>
+
+<%- include('../include/navbar.ejs') %>
+
+<div class="container">
+  <div class="alert alert-dismissible alert-success" style="display: none;">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Well done!</strong> Reply is sent.
+</div>
+      <form>
+         <% if(message) { %>
+            <% for(let k in message) { %>
+               <fieldset>
+                     <legend>Message</legend>
+                      <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">From</label>
+                            <div class="col-sm-10">
+                                  <input type="email" class="form-control-plaintext" readonly="" name="from" id="staticFrom" placeholder="Enter email" value="<%= message[k]['fromEmail'] %>" required>
+                            </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">To</label>
+                        <div class="col-sm-10">
+                              <input type="email" class="form-control-plaintext" readonly="" name="from" id="staticFrom" placeholder="Enter email" value="<%= message[k]['toEmail'] %>" required>
+                        </div>
+                  </div>
+                      <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Subject</label>
+                            <div class="col-sm-10">
+                                  <input type="text" class="form-control-plaintext" readonly="" name="subject" id="staticFrom"  value="<%= message[k]['subject'] %>" required>
+                            </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleTextarea">Body</label>
+                        <textarea class="form-control" style="border: none; resize: none;" name="text" id="exampleTextarea" rows="3" placeholder="Enter body" style="resize: none;" required readonly=""><%= message[k]['message'] %></textarea>
+                        </div> 
+                        <% if(reply) { %>
+                              <% for(let obj in reply) { %>
+                                    <% if( reply[obj]['conversation'] != null && reply[obj]['conversation'] != "" ) { %>
+                                          <div class="form-group">
+                                          <label for="exampleTextarea">Reply by </label> <%= reply[obj]['from'] %>
+                                          <textarea class="form-control" style="border: none; resize: none;" rows="3" placeholder="Enter body" style="resize: none;" required readonly=""><%= reply[obj]['conversation'] %></textarea>
+                                          </div>
+                                    <% } %>
+                              <% } %>
+                        <% } %>
+                  <!-- <% if(message[k]['reply1'] != null && message[k]['reply1'] != "")  { %>  
+                        <div class="form-group">
+                        <label for="exampleTextarea">Reply</label>
+                        <textarea class="form-control" style="border: none; resize: none;" name="replay1" id="replay1" rows="3" placeholder="Enter body" style="resize: none;" required><%= message[k]['reply1'] %></textarea>
+                        </div> 
+                  <% } %> 
+                  <% if(message[k]['reply2'] != null && message[k]['reply2'] != "")  { %>  
+                        <div class="form-group">
+                        <label for="exampleTextarea">Reply 2</label>
+                        <textarea class="form-control" style="border: none; resize: none;" name="reply2" id="reply2" rows="3" placeholder="Enter body" style="resize: none;" required><%= message[k]['reply2'] %></textarea>
+                        </div> 
+                  <% } %>  
+                  <% if(message[k]['reply3'] != null && message[k]['reply3'] != "")  { %>  
+                        <div class="form-group">
+                        <label for="exampleTextarea">Reply 3</label>
+                        <textarea class="form-control" style="border: none; resize: none;" name="reply3" id="reply3" rows="3" placeholder="Enter body" style="resize: none;" required><%= message[k]['reply3'] %></textarea>
+                        </div> 
+                  <% } %> 
+                  <% if(message[k]['reply4'] != null && message[k]['reply4'] != "")  { %>  
+                        <div class="form-group">
+                        <label for="exampleTextarea">Reply 4</label>
+                        <textarea class="form-control" style="border: none; resize: none;" name="reply4" id="reply4" rows="3" placeholder="Enter body" style="resize: none;" required><%= message[k]['reply4'] %></textarea>
+                        </div> 
+                  <% } %> 
+                  <% if(message[k]['reply5'] != null && message[k]['reply5'] != "")  { %>  
+                        <div class="form-group">
+                        <label for="exampleTextarea">Reply 5</label>
+                        <textarea class="form-control" style="border: none; resize: none;" name="reply5" id="reply5" rows="3" placeholder="Enter body" style="resize: none;" required><%= message[k]['reply5'] %></textarea>
+                        </div> 
+                  <% } %>  -->
+                              
+                     <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply">Reply</button>
+                     <a href="/support"><button type="button" class="btn btn-primary">Back</button></a>
+                     <div id="reply" class="collapse">
+                        <br>
+                        <textarea class="form-control" style="resize: none;" id="exampleReply" rows="3"></textarea><br>
+                        <input type="hidden" class="form-control-plaintext" name="email_id" id="staticUser" value="<%= message[k]['id'] %>">
+                        <input type="hidden" class="form-control-plaintext" name="fromReply" id="fromReply" value="<%= message[k]['toEmail'] %>">
+                        <input type="hidden" class="form-control-plaintext" name="toReply" id="toReply" value="<%= message[k]['fromEmail'] %>">
+                       <button type="button" class="btn btn-primary" onclick="reply()">Send</button>
+                       <button type="reset" class="btn btn-primary">Reset</button>
+                     </div>
+                     
+                   </fieldset>              
+            <% } %>
+         <% } %>
+      </form>
+</div>
+
+<hr>
+<%- include('../include/footer.ejs') %>
+
+<script>
+function reply()
+{
+      var reply = document.getElementById("exampleReply").value;
+      var emailId = document.getElementById("staticUser").value;
+      var from = document.getElementById("fromReply").value;
+      var to = document.getElementById("toReply").value;
+
+      axios.post('/reply', {email: emailId, reply: reply, from: from, to: to})
+      .then(success => {
+            alert("reply sent.");
+            location.reload();
+      })
+      .catch(err => {
+            console.log(err);
+            alert("Not possible");
+            location.reload();
+            
+      })
+}
+</script>

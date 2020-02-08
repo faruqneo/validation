@@ -1,0 +1,94 @@
+<%- include('../include/head.ejs') %>
+<div class="alert alert-dismissible alert-danger" style="display: none;">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Oh snap!</strong> <a href="/signup" class="alert-link">Change a few things up</a> and try submitting again.
+  </div>
+  <div class="alert alert-dismissible alert-success" style="display: none;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Well done!</strong> You successfully signup <a href="/" class="alert-link">click here for login</a>.
+</div>
+    </div>
+
+    <div class="loader" style="max-width: 27rem; margin-left: 45%; margin-top: 20%; display: none;"></div>
+      <div class="card border-primary mb-3" style="max-width: 27rem; margin-left: 32%; margin-top: 4%;">
+         <!-- <div class="card-header">Login</div> -->
+         <div class="card-body">
+            <form>
+               <fieldset>
+                 <legend>Sign Up</legend>
+                 <div class="form-group">
+                  <label for="exampleInputEmail1">Name</label>
+                  <input type="name" class="form-control" id="exampleInputName" name="name" placeholder="Enter name" required> 
+                </div>
+                 <div class="form-group">
+                   <label for="exampleInputEmail1">Email address</label>
+                   <input type="email" class="form-control" id="exampleInputEmail" name="email" aria-describedby="emailHelp"  placeholder="Enter email" required>
+                   <small id="emailHelp" class="form-text text-muted">This site uses Gravatar so if you want a profile image, use a Gravatar email.</small> 
+                 </div>
+                 <div class="form-group">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword" name="password" placeholder="Password" required>
+                </div>
+                 <div class="form-group">
+                   <label for="exampleInputPassword1">Confirm Password</label>
+                   <input type="password" class="form-control" id="exampleInputPassword2" name="password2" placeholder="Confirm Password" required>
+                 </div>
+                 </fieldset>
+                 <!-- <button type="button" class="btn btn-primary" onclick="signup(event)" >Submit</button> -->
+                 <input type="submit" class="btn btn-primary" onclick="signup(event)" id="submitDemo" value="Submit"/>
+               </fieldset>
+             </form>
+         </div>
+       </div>
+   
+<%- include('../include/footer.ejs') %>
+
+<script>
+  const inputs = document.querySelectorAll("input");
+
+  const patterns = {
+    name:/[a-zA-Z][a-zA-Z ]*/,
+    email:/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+    password:/^[ A-Za-z0-9_@.\/#&+-]{6,30}$/,
+    //password2:""
+  };
+
+  inputs.forEach(inputs => {
+    inputs.addEventListener("keyup", (e) => {
+      //console.log(e.target.attributes.name.value);
+      //console.log(e.target.value);
+      validate(e.target, patterns[e.target.attributes.name.value])
+    });
+  })
+
+  function validate(field, regex) {
+  // console.log(regex.test(field.value));
+  if(regex.test(field.value))
+    field.className = "valid";
+  else
+    field.className = "invalid";
+ }
+
+  //$('.loader').hide();
+  $('.card').show();
+
+  function signup(e){
+    e.preventDefault();
+      //alert('werty')
+      var name = document.getElementById("exampleInputName").value;
+      var email = document.getElementById("exampleInputEmail").value;
+      var password = document.getElementById("exampleInputPassword").value;
+      var password2 = document.getElementById("exampleInputPassword2").value;
+  
+      axios.post('/signup', {name: name, email: email, password: password, password2: password2})
+      .then(function (response) {
+        $('.alert-danger').hide();
+        $('.alert-success').show();
+      })
+      .catch(function (error) {
+        $('.alert-danger').show();
+        $('.alert-success').hide();
+      });
+  }
+
+</script>

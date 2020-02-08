@@ -1,0 +1,40 @@
+
+
+  <% if(inbox) { %> 
+    <div class="list-group">
+    <% for(let obj of inbox) { %>
+      <li class="list-group-item list-group-item-action">
+          <!-- <input type="hidden" id="inboxId" value="<%= obj.id %>" > -->
+        <a href="/emails/<%= obj.id %>" style="text-decoration: none;"><%= obj.fromEmail %></a> &nbsp;&nbsp;&nbsp;  <%= obj.message %>
+          <span class="badge badge-primary badge-pill" onclick="inboxTicket('<%= obj.id %>')">
+            <%if (obj.status === 1) {%>  New  <%}%><%if (obj.status === 2) {%>  Open  <%}%><%if (obj.status === 3) {%>  Close  <%}%>
+          </span>
+        </li>
+
+        <script>
+            // var inboxID = document.getElementById("inboxId").value;
+            // console.log("inbox",inboxID)
+          function inboxTicket(inboxID)
+          {
+            //alert("inbox")
+            if(confirm("Close this ticket ?"))
+            {
+              axios.get(`/ticketClose/${inboxID}`)
+              .then(function (response) {
+                console.log(response);
+                window.location.reload();
+              })
+              .catch(function (error) {
+                console.log(error);
+                alert("Not possible");
+                location.reload()
+              });
+            }  
+          }
+          </script>
+    <% } %>
+  </div>
+  <% } else { %>
+    <h1>You have no emails.</h1>
+  <% } %>
+    

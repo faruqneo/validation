@@ -1,0 +1,39 @@
+
+
+  <% if(sent) { %> 
+   <div class="list-group">
+   <% for(let obj of sent) { %>
+     <li class="list-group-item list-group-item-action">
+       <!-- <input type="hidden" id="sentId" value="<%= obj.id %>" > -->
+         <a href="/emails/<%= obj.id %>" style="text-decoration: none;"><%= obj.toEmail %></a> &nbsp;&nbsp;&nbsp;  <%= obj.message %>
+         <span class="badge badge-primary badge-pill" onclick="sentTicket('<%= obj.id %>')">
+          <%if (obj.status === 1) {%>  New  <%}%><%if (obj.status === 2) {%>  Open  <%}%><%if (obj.status === 3) {%>  Close  <%}%></span>
+          
+         </li>
+   <% } %>
+ </div>
+ <% } else { %>
+   <h1>You have no emails.</h1>
+ <% } %>
+
+ <script>
+  //  var sendID = document.getElementById("sentId").value;
+  //  console.log("sent",sendID)
+ function sentTicket(sendID)
+ {
+  // alert(sendID)
+   if(confirm("Close this ticket ?"))
+   {
+    axios.get(`/ticketClose/${sendID}`)
+    .then(function (response) {
+      console.log(response);
+      window.location.reload();
+    })
+    .catch(function (error) {
+      console.log(error);
+      alert("Not possible");
+      location.reload()
+    });
+   }
+ }
+ </script>

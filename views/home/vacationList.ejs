@@ -1,0 +1,55 @@
+<%- include('../include/head.ejs') %>
+
+<%- include('../include/navbar.ejs') %>
+<div class="container">
+  <% if(vacation) { %>
+    <ul class="list-group">
+    <% for(let obj of vacation) { %>
+       <li class="list-group-item d-flex justify-content-between align-items-center">
+             <a href='/vacation/<%= obj.id %>' style="text-decoration: none; color: rgb(51, 48, 48);"><%= obj.userName %></a>
+       <span class="badge badge-primary badge-pill" onclick="vacationTicket('<%= obj.id %>', '<%= obj.status %>')">
+            <%if (obj.status === 0) {%>  New  <%}%><%if (obj.status === 1) {%>  Approved  <%}%><%if (obj.status === 2) {%>  Rejected  <%}%>
+       </span>
+       </li>
+       <script>
+          function vacationTicket(vacationID, vacationStatus)
+          {
+            //alert(vacationID+","+vacationStatus)
+            if(vacationStatus === "0")
+            {
+               if(confirm("press OK for approve or Cancel for reject"))
+               {
+                  axios.post('/vacationResponse', {
+                     id: vacationID,
+                     response: "approve"
+                  })
+                  .then(location.href = '/vacation')
+                  .catch(err => {
+                     console.log(err);
+                     alert(err)
+                  })
+               }
+               else
+               {
+                  axios.post('/vacationResponse', {
+                     id: vacationID,
+                     response: "reject"
+                  })
+                  .then(location.href = '/vacation')
+                  .catch(err => {
+                     console.log(err);
+                     alert(err);
+                  })
+               }
+            }
+            
+          }
+          </script>
+    <% } %> 
+    </ul>
+ <% }%>
+</div>
+
+<hr>
+<%- include('../include/footer.ejs') %>
+

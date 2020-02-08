@@ -1,0 +1,67 @@
+
+<%- include('../include/head.ejs') %>
+
+<%- include('../include/navbar.ejs') %>
+
+<div class="container">
+  <div class="alert alert-dismissible alert-success" style="display: none;">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Well done!</strong> Reply is sent.
+</div>
+      <form>
+            <fieldset>
+                  <legend>News & Events</legend>
+                  <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Title</label>
+                        <div class="col-sm-10">
+                              <input type="text" class="form-control-plaintext" name="title" id="title" placeholder="Enter title" value="<%= data['title'] %>" required>
+                        </div>
+                  </div>
+                  <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Description</label>
+                        <div class="col-sm-10">
+                              <textarea class="form-control" style="border: none; resize: none;" name="description" id="description" rows="1" placeholder="Enter desc" style="resize: none;" required ><%= data['desc'] %></textarea>
+                        </div>
+                  </div>
+                  <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Extra details</label>
+                        <div class="col-sm-10">
+                              <textarea class="form-control" style="border: none; resize: none;" name="extradetails" id="extradetails" rows="3" placeholder="Enter extradetails" style="resize: none;" required ><%= data['extradetails'] %></textarea>
+                        </div>
+                  </div>
+                  <input type="hidden" class="form-control-plaintext" name="event_id" id="staticUser" value="<%= data['id'] %>">
+                  <button type="button" class="btn btn-primary" onclick="edit()">Edit</button>
+                  <!-- <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">eventdate</label>
+                        <div class="col-sm-10">
+                              <input type="text" class="form-control-plaintext" name="eventdate" id="staticFrom"  value="<%= data['eventdate'] %>" required>
+                        </div>
+                  </div> -->
+            </fieldset>
+      </form>
+</div>
+
+<hr>
+<%- include('../include/footer.ejs') %>
+
+<script>
+function edit()
+{
+      var title = document.getElementById("title").value;
+      var description = document.getElementById("description").value;
+      var extradetails = document.getElementById("extradetails").value;
+      var event_id = document.getElementById("staticUser").value;
+
+      axios.post('/news&EventEdit', {title: title, description: description, extradetails: extradetails, event_id:event_id})
+      .then(success => {
+            alert("Event is updated.");
+            location.href="/newsevent";
+      })
+      .catch(err => {
+            console.log(err);
+            alert("Not possible");
+            location.reload();
+            
+      })
+}
+</script>
