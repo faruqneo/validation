@@ -29,7 +29,7 @@
     "express-messages": "^1.0.1",
     "express-mysql-session": "^2.1.0",
     "express-session": "^1.16.1",
-    "googleapis": "^37.1.0",
+    "googleapis": "^39.1.0",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "localStorage": "^1.0.4",
