@@ -14,7 +14,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/faruqneo/marmeto-app#readme",
   "devDependencies": {
-    "aws-sdk": "^2.454.0",
+    "aws-sdk": "^2.814.0",
     "nodemon": "^1.18.3"
   },
   "dependencies": {
